@@ -55,3 +55,7 @@ We create the spline using Kluge's spline header ```line 360 - 365```. And now w
 ### Reflection
 
 The walkthrough was very usefull to get a good start. Using the future points and incorporating the lane number and speed in there was a great way to easily build the request lane shifting and speed controlling functions on top. It was fairly easy to build the lane switching and speed controls, but I spent quite some time optimising them in such a way that it felt efficient and fast. Checking whether the car was in the center of it's own lane ```line 283``` proved very helpful in preventing the car from making to irredical lane shifts.
+
+### Updates
+
+The Udacity reviewer brought to my attention that the car sometimes changes lanes to a lane where the car is actually closer and than immediately changes back (uncomfortable). This was because the distance in order to change  a lane was set to 15 meters, where the distance to keep to the car in front was set at 30 meters. I have adjusted this by setting the lane changing distance to 35 meters, but at the same time multiplying the distance when the value is negative ```line 263 - 265``` this ensures the car can overtake when the distance to a car in the next lane is 35 meters in front, or 17.5 meters behind. Keeping a safe distance to both :)

@@ -259,7 +259,10 @@ int main() {
               double check_speed = sqrt(vx*vx+vy*vy);
               double check_car_s = sensor_fusion[i][5];
               check_car_s += ((double)prev_size*0.02*check_speed);
-              double distance = abs(check_car_s - car_s);
+              double distance = check_car_s - car_s;
+              if (distance < 0) { // Car is behind
+                distance = -2 * distance; // Cars behind can be twice as close
+              }
 
               if (d < (2 + 4 * lane + 2) && d > (2 + 4 * lane - 2)) {
                 if ((check_car_s > car_s) && ((check_car_s - car_s < 30))) {
@@ -278,7 +281,7 @@ int main() {
             }
 
             if (too_close && target_speed) {
-              if (((LCL > 15 && LCL < 1000) || (LCR > 15 && LCR < 1000))) {
+              if (((LCL > 35 && LCL < 1000) || (LCR > 35 && LCR < 1000))) {
                 double distanceFromLane = abs(car_d - (2 + 4 * lane));
                 if (distanceFromLane < 0.5) {
                   if (LCR == 1000) { // Prefer left shift
